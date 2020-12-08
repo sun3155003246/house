@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sxp.dao.CityDAO">
+
+    <!--查询所有的城市-->
+    <select id="supportCities"  resultType="com.sxp.entity.City">
+        select * from city c where c.level = 'city'
+    </select>
+    <!--根据城市简称，查询城市下对应的区县-->
+    <select id="queryRegionBycname" parameterType="java.lang.String" resultType="com.sxp.entity.City" >
+        select
+          C.cityId,C.cnName,C.enName,C.level
+        from city c where c.level = 'region' and c.belongTo = #{city_name}
+
+    </select>
+</mapper>

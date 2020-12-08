@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sxp.dao.HouseDAO">
+
+
+    <!--保存房屋信息-->
+    <insert id="saveHouse" parameterType="com.sxp.entity.House" useGeneratedKeys="true" keyColumn="houseId" keyProperty="houseId">
+        insert  into house(title,price,area,room,floor,totalFloor,watchTimes,buildYear,status,
+            createTime,lastUpdateTime,cityEnName,regionEnName,cover,direction,distanceToSubway,parlour,
+            district,adminId,bathroom,street,houseCode)
+        values
+            (#{title},#{price},#{area},#{room},#{floor},#{totalFloor},#{watchTimes},#{buildYear},#{status},
+                 #{createTime},#{lastUpdateTime},#{cityEnName},#{regionEnName},#{cover},#{direction},#{distanceToSubway},
+                 #{parlour},#{district},#{adminId},#{bathroom},#{street},#{houseCode})
+
+
+    </insert>
+
+    <!--保存房屋详情信息-->
+    <insert id="saveHouseDetail" parameterType="com.sxp.entity.HouseDetail">
+          insert  into house_detail
+                  (description,layoutDesc,traffic,roundService,rentWay,address,subwayId,
+                    subwayName,subwayStationId,subwayStationName,houseId)
+          values
+                  (#{description},#{layoutDesc},#{traffic},#{roundService},#{rentWay},#{address},#{subwayId},
+                    #{subwayName},#{subwayStationId},#{subwayStationName},#{houseId})
+    </insert>
+
+
+    <!--保存房屋标签信息-->
+    <insert id="saveHouseTags" parameterType="java.util.List">
+        insert  into house_tag
+          (houseId,tagName)
+        values
+           <foreach collection="list" item="tag"  separator=","  >
+               (#{tag.houseId},#{tag.tagName})
+          </foreach>
+    </insert>
+
+    <!--批量保存图片信息-->
+    <insert id="saveHousePictures" parameterType="java.util.List">
+        insert  into house_picture
+        (houseId,cdnPrefix,width,height,location,path)
+        values
+        <foreach collection="list" item="pri" separator=",">
+            (#{pri.houseId},#{pri.cdnPrefix},#{pri.width},#{pri.height},#{pri.location},#{pri.path})
+        </foreach>
+    </insert>
+
+</mapper>
